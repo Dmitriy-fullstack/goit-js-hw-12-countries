@@ -1,67 +1,38 @@
 
-import './style.css';
+import './style.scss';
+import fetchCountries from "./fetchCountries.js";
+import countryCardTpl from '../tamplates/country.hbs';
+import debounce from 'lodash.debounce';
+import '@pnotify/core/dist/BrightTheme.css';
+import '@pnotify/core/dist/PNotify.css';
+import { error } from '@pnotify/core';
 
-class CountdownTimer{
-  constructor ({ selector, targetDate }) {
-    this.selector = selector;
-    this.targetDate = targetDate; 
-    
+const refs = {
+  input: document.querySelector('.js-search'),
+  cardContainer: document.querySelector('.cardContainer')
+}
 
-    this.refs = {
-      days: document.querySelector(`${selector} [data-value="days"]`),
-      hours: document.querySelector(`${selector} [data-value="hours"]`),
-      mins: document.querySelector(`${selector} [data-value="mins"]`),
-      secs: document.querySelector(`${selector} [data-value="secs"]`),
-    };
-  }
-  interval() {
-     setInterval(() => {
+refs.input.addEventListener('input', debounce(onSearch, 500));
+
+function clearResult() {
+  refs.input.value = '';
+}
+
+function valData(Event) {
+  const countryName = Event.target.value.trim();
+  if (countryName.length === 0) return clearResult();
+  fetchCountries(countryName);
+}
+
+function renderCountryCards(country) {
+  const markup = countryCardTpl(country);
+  refs.cardContainer.innerHTML = markup;
+}
+
+function onSearch(Event) {
   
-      const currentTime = Date.now();
-      const deltaTime = this.targetDate - currentTime;
-      const timeComponents = getTimeComponents(deltaTime);
-      
-      this.updateTimer(timeComponents);
-  
-    }, 1000);
-  }
-
-  updateTimer({ days, hours, mins, secs }) {
-    this.refs.days.innerHTML = days;
-    this.refs.hours.innerHTML = hours;
-    this.refs.mins.innerHTML = mins;
-    this.refs.secs.innerHTML = secs;
-  }
+  Event.preventDefault();
+  valData(Event);
+  renderCountryCards();
 } 
-
-
-function pad (value){
-  return String(value).padStart(2, '0');
-}
-
-function getTimeComponents (time) {
-  const days = pad(Math.floor(time / (1000 * 60 * 60 * 24)));
-  const hours = pad(Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-  const mins = pad(Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)));
-  const secs = pad(Math.floor((time % (1000 * 60)) / 1000));
-
-  return { days, hours, mins, secs };
-}
-
-
-const timer = new CountdownTimer({
-  selector: '#timer-1',
-  targetDate: new Date('Oct 11, 2021'),
-});
-
-timer.interval();
-
-
-
-
-
-
-
-
-
 
