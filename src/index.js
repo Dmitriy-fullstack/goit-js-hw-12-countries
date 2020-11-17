@@ -35,14 +35,14 @@ function clearResult() {
 
 function renderCountryCards(country) {
   console.log(country);
-
+  const markup = '';
   const { length } = country;
 
   if (length === 1) {
-    const markup = countryCardTpl(country);
+    markup = countryCardTpl(country);
   }
   if (length > 2 & country.length < 10) {
-    const markup = countryListTpl(country);
+    markup = countryListTpl(country);
   }
   if (length > 10) {
     console.log('many countries');
