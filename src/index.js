@@ -1,8 +1,8 @@
 
 import './style.scss';
 import fetchCountries from "./fetchCountries.js";
-import countryCardTpl from '../tamplates/country.hbs';
-import countryListTpl from '../tamplates/countryList.hbs';
+import countryCardTpl from './templates/country.hbs';
+import countryListTpl from './templates/countryList.hbs';
 import debounce from 'lodash.debounce';
 import { defaults } from '@pnotify/core';
 import '@pnotify/core/dist/BrightTheme.css';
@@ -24,11 +24,6 @@ const refs = {
   cardContainer: document.querySelector('.cardContainer')
 }
 
-const error = {
-  text:'Too many matches found. Please enter a more specific query',
-  type: 'error'
-};
-
 refs.input.addEventListener('input', debounce(onSearch, 500));
 
 function clearResult() {
@@ -40,17 +35,20 @@ function clearResult() {
 
 function renderCountryCards(country) {
 
-  if (country.length === 1) {
+  const { length } = country;
+
+  if (length === 1) {
     const markup = countryCardTpl(country);
   }
-  if (country.length > 2 & country.length < 10) {
+  if (length > 2 & country.length < 10) {
     const markup = countryListTpl(country);
   }
-  if (country.length > 10) {
-    error({
-                text:'Too many matches found. Please enter a more specific query',
-                type: 'error'
-            })
+  if (length > 10) {
+    console.log('many countries');
+    // error({
+    //             text:'Too many matches found. Please enter a more specific query',
+    //             type: 'error'
+    //         })
   }
   
    refs.cardContainer.innerHTML = markup;

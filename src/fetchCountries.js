@@ -10,10 +10,7 @@ function fetchCountries(name) {
         
       .then(data => {
           if (data.length > 10) {
-            return error({
-                text:'Too many matches found. Please enter a more specific query',
-                type: 'error'
-            })
+            return console.log('many countries');
           }
       })
         
