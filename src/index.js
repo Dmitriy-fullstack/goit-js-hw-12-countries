@@ -24,6 +24,11 @@ const refs = {
   cardContainer: document.querySelector('.cardContainer')
 }
 
+const error = {
+  text:'Too many matches found. Please enter a more specific query',
+  type: 'error'
+};
+
 refs.input.addEventListener('input', debounce(onSearch, 500));
 
 function clearResult() {
@@ -34,18 +39,25 @@ function clearResult() {
 
 
 function renderCountryCards(country) {
+
+  if (country.length === 1) {
+    const markup = countryCardTpl(country);
+  }
+  if (country.length > 2 & country.length < 10) {
+    const markup = countryListTpl(country);
+  }
+  if (country.length > 10) {
+    error({
+                text:'Too many matches found. Please enter a more specific query',
+                type: 'error'
+            })
+  }
   
-  const markup = countryCardTpl(country);
-  console.log(markup);
-  refs.cardContainer.innerHTML = markup;
+   refs.cardContainer.innerHTML = markup;
+   console.log(markup);
 }
 
-function renderCountryListCard(country) {
-  
-  const markup = countryListTpl(country);
-  console.log(markup);
-  refs.cardContainer.innerHTML = markup;
-}
+
 
 
 function onSearch(Event) {
@@ -57,7 +69,7 @@ function onSearch(Event) {
   
   fetchCountries(countryName)
    .then(data => renderCountryCards(data))
-   .catch(error => {console.log(error) })
+   .catch(error => { console.log(error) })
  
 } 
 
