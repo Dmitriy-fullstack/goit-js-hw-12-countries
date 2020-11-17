@@ -34,6 +34,7 @@ function clearResult() {
 
 
 function renderCountryCards(country) {
+  console.log(country);
 
   const { length } = country;
 

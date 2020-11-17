@@ -8,12 +8,7 @@ function fetchCountries(name) {
         throw new Error('Error fetching data');
       })
         
-      .then(data => {
-          if (data.length > 10) {
-            return console.log('many countries');
-          }
-      })
-        
+             
     .catch(error => {
         console.log(error);
     })
