@@ -33,29 +33,53 @@ function clearResult() {
 
 
 
+// function renderCountryCards(country) {
+//   console.log(country);
+//   const markup = null;
+//   const { length } = country;
+
+//   if (length === 1) {
+//     markup = countryCardTpl(country);
+//   }
+//   if (length > 2 & country.length < 10) {
+//     markup = countryListTpl(country);
+//   }
+//   if (length > 10) {
+//     console.log('many countries');
+    
+//   }
+  
+//    refs.cardContainer.innerHTML = markup;
+//    console.log(markup);
+// }
+
+const markup = '';
+
 function renderCountryCards(country) {
   console.log(country);
-  const markup = '';
   const { length } = country;
-
-  if (length === 1) {
-    markup = countryCardTpl(country);
+    if (length === 1) {
+    renderCountry(country);
   }
-  if (length > 2 & country.length < 10) {
-    markup = countryListTpl(country);
+    if (length > 2 & country.length < 10) {
+      renderCountriesList(country);
   }
-  if (length > 10) {
-    console.log('many countries');
-    // error({
-    //             text:'Too many matches found. Please enter a more specific query',
-    //             type: 'error'
-    //         })
+    if (length > 10) {
+  console.log('many countries');
   }
-  
-   refs.cardContainer.innerHTML = markup;
-   console.log(markup);
+  console.log(markup);
 }
 
+
+  function renderCountry(country) {
+  const markup = countryCardTpl(country);
+   refs.cardContainer.innerHTML = markup;
+  }
+
+  function renderCountriesList(country) {
+  const markup = countryListTpl(country);
+   refs.cardContainer.innerHTML = markup;
+  }
 
 
 
