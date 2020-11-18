@@ -1,15 +1,15 @@
 
-import './style.scss';
+import './style.css';
 import fetchCountries from "./fetchCountries.js";
 import countryCardTpl from './templates/country.hbs';
 import countryListTpl from './templates/countryList.hbs';
 import debounce from 'lodash.debounce';
-import { defaults } from '@pnotify/core';
+// import 'material-design-icons/iconfont/material-icons.css';
 import '@pnotify/core/dist/BrightTheme.css';
 import '@pnotify/core/dist/PNotify.css';
-import { error } from '@pnotify/core';
-import { data } from 'autoprefixer';
-// import 'material-design-icons/iconfont/material-icons.css';
+import {defaults, alert} from'@pnotify/core';
+
+
 defaults.icons = 'material';
 defaults.width = '360px';
 defaults.minHeight = '40px';
@@ -19,6 +19,14 @@ defaults.sticker = false;
 defaults.addClass = 'error';
 defaults.autoOpen = false;
 
+function notifyError(err) {
+  alert({
+  text:`${err}`,
+  type: 'info',
+  hide: false
+  });
+}
+ 
 const refs = {
   input: document.querySelector('.js-search'),
   cardContainer: document.querySelector('.cardContainer')
@@ -30,28 +38,6 @@ function clearResult() {
   refs.input.value = '';
   refs.cardContainer.innerHTML = '';
 }
-
-
-
-// function renderCountryCards(country) {
-//   console.log(country);
-//   const markup = null;
-//   const { length } = country;
-
-//   if (length === 1) {
-//     markup = countryCardTpl(country);
-//   }
-//   if (length > 2 & country.length < 10) {
-//     markup = countryListTpl(country);
-//   }
-//   if (length > 10) {
-//     console.log('many countries');
-    
-//   }
-  
-//    refs.cardContainer.innerHTML = markup;
-//    console.log(markup);
-// }
 
 const markup = '';
 
@@ -65,7 +51,8 @@ function renderCountryCards(country) {
       renderCountriesList(country);
   }
     if (length > 10) {
-  console.log('many countries');
+      notifyError('Too many matches found. Please enter a more specific query');
+      console.log('many countries');
   }
   console.log(markup);
 }
