@@ -5,11 +5,16 @@ import countryCardTpl from './templates/country.hbs';
 import countryListTpl from './templates/countryList.hbs';
 import debounce from 'lodash.debounce';
 // import 'material-design-icons/iconfont/material-icons.css';
-import '@pnotify/core/dist/BrightTheme.css';
+// import '@pnotify/core/dist/BrightTheme.css';
+// import '@pnotify/core/dist/PNotify.css';
+// import {defaults, alert} from'@pnotify/core';
+import { error, defaults } from '@pnotify/core';
 import '@pnotify/core/dist/PNotify.css';
-import {defaults, alert} from'@pnotify/core';
+import '@pnotify/core/dist/Material.css';
+import 'material-design-icons/iconfont/material-icons.css';
+defaults.styling = 'material';
 
-
+ 
 defaults.icons = 'material';
 defaults.width = '360px';
 defaults.minHeight = '40px';
@@ -20,12 +25,14 @@ defaults.addClass = 'error';
 defaults.autoOpen = false;
 
 function notifyError(err) {
-  alert({
+  error({
   text:`${err}`,
   type: 'info',
-  hide: false
+  hide: false,
   });
 }
+
+notifyError();
  
 const refs = {
   input: document.querySelector('.js-search'),
@@ -51,7 +58,7 @@ function renderCountryCards(country) {
       renderCountriesList(country);
   }
     if (length > 10) {
-      notifyError('Too many matches found. Please enter a more specific query');
+      notifyError();
       console.log('many countries');
   }
   console.log(markup);
@@ -83,11 +90,4 @@ function onSearch(Event) {
  
 } 
 
-// function errorMessage(data) {
-//     if (data.length > 10) {
-//       error({
-//           text:'Too many matches found. Please enter a more specific query',
-//           type: 'error'
-//       })
-//     } 
-//   }
+
