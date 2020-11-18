@@ -22,7 +22,7 @@ defaults.delay = '1000';
 defaults.closer = false;
 defaults.sticker = false;
 defaults.addClass = 'error';
-defaults.autoOpen = false;
+
 
 function notifyError(err) {
   error({
@@ -32,7 +32,7 @@ function notifyError(err) {
   });
 }
 
-notifyError();
+
  
 const refs = {
   input: document.querySelector('.js-search'),
@@ -58,8 +58,8 @@ function renderCountryCards(country) {
       renderCountriesList(country);
   }
     if (length > 10) {
-      notifyError();
-      console.log('many countries');
+      notifyError('Конкретизируйте ввод, слишком мало букв для поиска');
+      
   }
   console.log(markup);
 }
