@@ -52,28 +52,39 @@ function renderCountryCards(country) {
   console.log(country);
   const { length } = country;
     if (length === 1) {
-    renderCountry(country);
+    refs.cardContainer.innerHTML = '';
+    console.log(markup);
+    renderCountry(country, countryCardTpl);
+    
+
   }
     if (length > 2 & country.length < 10) {
-      renderCountriesList(country);
+      refs.cardContainer.innerHTML = '';
+      renderCountry(country, countryListTpl);
+      console.log(markup);
   }
     if (length > 10) {
+      refs.cardContainer.innerHTML = '';
       notifyError('Конкретизируйте ввод, слишком мало букв для поиска');
       
   }
-  console.log(markup);
+  // console.log(markup);
 }
 
+function renderCountry(country, hbs) {
+  return refs.cardContainer.insertAdjacentHTML('beforeend', hbs(country))
+}
 
-  function renderCountry(country) {
-  const markup = countryCardTpl(country);
-   refs.cardContainer.innerHTML = markup;
-  }
+  // function renderCountry(country) {
+  // // const markup = countryCardTpl(country);
+  //  refs.cardContainer.innerHTML = markup;
 
-  function renderCountriesList(country) {
-  const markup = countryListTpl(country);
-   refs.cardContainer.innerHTML = markup;
-  }
+  // }
+
+  // function renderCountriesList(country) {
+  // // const markup = countryListTpl(country);
+  //  refs.cardContainer.innerHTML = markup;
+  // }
 
 
 
